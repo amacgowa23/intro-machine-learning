@@ -24,7 +24,39 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+from sklearn import svm
 
+#features_train = features_train[:len(features_train)/100] 
+#labels_train = labels_train[:len(labels_train)/100] 
+
+clf = svm.SVC(kernel='rbf',C=10000.0)
+t0 = time()
+clf.fit(features_train, labels_train)
+print "training time:", round(time()-t0, 3), "s"
+
+t1 = time()
+pred = clf.predict(features_test)
+print "prediction time:", round(time()-t1, 3), "s"
+
+print "prediction is ", pred
+
+#print "prediction for 10th element is ", pred[10]
+#print "prediction for 26th element is ", pred[26]
+#print "prediction for 50th element is ", pred[50]
+
+count1 = 0
+for p in pred:
+    if p == 1:
+        count1 = count1 + 1
+
+print "Number of test events in Chris' class [1] is", count1
+    
+
+#from sklearn.metrics import accuracy_score
+
+#accuracy = accuracy_score(pred, labels_test)
+
+#print "accuracy is ", accuracy
 #########################################################
 
 
