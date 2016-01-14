@@ -30,6 +30,16 @@ plt.show()
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
+from sklearn.ensemble import RandomForestClassifier
+
+clf = RandomForestClassifier(n_estimators=1000, min_samples_split=50, 
+                             criterion='entropy', min_samples_leaf=50,
+                             bootstrap=False)
+clf = clf.fit(features_train, labels_train)
+
+accuracy = clf.score(features_test, labels_test)
+
+print "The accuracy is", accuracy
 
 
 
