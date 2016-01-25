@@ -81,6 +81,14 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+
+reg.fit(feature_test, target_test)  # line without outlier
+plt.plot(feature_train, reg.predict(feature_train), color="g") 
+slope2 = reg.coef_
+print "slope without outlier is", slope2
+
+
+
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
