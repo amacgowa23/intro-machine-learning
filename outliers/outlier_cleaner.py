@@ -12,8 +12,17 @@ def outlierCleaner(predictions, ages, net_worths):
     """
     
     cleaned_data = []
+    
+    tlist = []
 
-    ### your code goes here
+    for num in range(0,90):
+        
+        error = net_worths[num][0] - predictions[num][0]
+        tlist.append((ages[num][0], net_worths[num][0], error))
+    
+    cleaned_data = sorted(tlist, key=lambda x: x[2], reverse=True)
+    
+    cleaned_data = cleaned_data[:80]
 
     
     return cleaned_data
