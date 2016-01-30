@@ -67,9 +67,9 @@ eso_list = []
 sal_list = []
 for array in finance_features:
     if array[1] > 0:
-        eso_list.append(array[1])
+        eso_list.append(array[1] * 1.0)
     if array[0] > 0:
-        sal_list.append(array[0])
+        sal_list.append(array[0] * 1.0)
 
 print "Max value of exercised stock options is", max(eso_list)
 
@@ -83,6 +83,22 @@ print "Min value of salary is", min(sal_list)
 ### for the data and store them to a list called pred
 from sklearn.cluster import KMeans
 pred = KMeans(n_clusters=2).fit_predict(data)
+
+
+### perform feature scaling on salary and exercised_stock_options
+from sklearn.preprocessing import MinMaxScaler
+
+sal = numpy.array([sal_list]).reshape(94,1)  #len(sal_list) = 94
+eso = numpy.array(eso_list).reshape(101,1)  #len(eso_list) = 101 
+scaler1 = MinMaxScaler()
+rescale_sal = scaler1.fit_transform(sal)
+print "Salary of $200,000 would be rescaled to", scaler1.transform([[float(200000)]])
+
+scaler2 = MinMaxScaler()
+rescale_eso = scaler2.fit_transform(eso)
+print "Exercised stock options of $1 million would be rescaled to $", scaler2.transform([[float(1000000)]])
+
+
 
 
 
