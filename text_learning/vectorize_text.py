@@ -41,35 +41,57 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
-        if temp_counter < 200:
+      #  temp_counter += 1
+       # if temp_counter < 200:
             path = os.path.join('..', path[:-1])
-            print path
+            #print path
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
-
+            text = parseOutText(email)
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-
+            remlist = ["sara", "shackleton", "chris", "germani"]
+            for r in remlist:
+                text = text.replace(r,"")
             ### append the text to word_data
+            word_data.append(text)
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
+            if name == "sara":
+                from_data.append(0)
+            if name == 'chris':
+                from_data.append(1)
 
             email.close()
 
-print "emails processed"
+#print "emails processed"
 from_sara.close()
 from_chris.close()
 
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
 pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
-
-
+#print word_data[152]
+#print from_data
 
 
 ### in Part 4, do TfIdf vectorization here
+#from sklearn.feature_extraction.text import TfidfTransformer
+#tfidf = TfidfTransformer()
+#tfidf.fit_transform(word_data)
+from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.corpus import stopwords
+
+#vect = TfidfVectorizer(stop_words=stopwords.words("english"))
+vect = TfidfVectorizer(stop_words='english')
+
+vect.fit_transform(word_data)
+
+list_of_names = vect.get_feature_names()
+
+print len(list_of_names)
+
+print "Word number 34597 is", list_of_names[34597] 
 
 
