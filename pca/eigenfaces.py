@@ -67,11 +67,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
 # dataset): unsupervised feature extraction / dimensionality reduction
 n_components = 150
+# when n=150, f1 for Arial Sharon = 0.55; n=250, f1=0.6;  
+# n=100, f1=0.69; n=50, f1=0.69; n=25, f1=0.64; n=15, f1=0.38,   
 
 print "Extracting the top %d eigenfaces from %d faces" % (n_components, X_train.shape[0])
 t0 = time()
 pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
 print "done in %0.3fs" % (time() - t0)
+
+# First and second principle components
+print "first component", pca.components_[0]
+print "second component", pca.components_[1]
+print "highest variance explained by", pca.explained_variance_ratio_[0]
+print "next highest variance explained by", pca.explained_variance_ratio_[1]
 
 eigenfaces = pca.components_.reshape((n_components, h, w))
 

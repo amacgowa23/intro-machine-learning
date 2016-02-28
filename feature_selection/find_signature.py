@@ -38,6 +38,23 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn import tree
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(features_train, labels_train)
+accuracy = clf.score(features_test, labels_test)
 
+print "accuracy is", accuracy
+
+count = 0
+for feature in clf.feature_importances_:
+    if feature > 0.2:
+        print [feature, count]
+    count += 1
+    # feature number is 33614, importance is 0.7647
+
+names = vectorizer.get_feature_names()  
+#print names[33614]   # offending name before sshacklensf was removed
+#print names[14343]  # offending name cgermannsf is removed
+print names[21323]
 
 
