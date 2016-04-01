@@ -26,8 +26,7 @@ with open("final_project_dataset.pkl", "r") as data_file:
 
 ## Find out more about persons and features.
 print
-print "Total number of persons is", len(data_dict)
-print
+print "Total number of persons is", len(data_dict)  
 
 persons = []
 features = []
@@ -275,17 +274,19 @@ for feature in clf.feature_importances_:
     count += 1
 """
 
-## Naive Bayes supervised learning classifier (best results)
+## Naive Bayes supervised learning classifier 
 from sklearn.naive_bayes import GaussianNB
 clf1 = GaussianNB()
 clf1 = clf1.fit(features_train, labels_train)
 
-## SVM supervised learning classifier with C parameter tuned
-from sklearn import svm
-parameters = {'C':[1, 10, 100, 1000]}
-svr = svm.SVC()
-clf2 = grid_search.GridSearchCV(svr, parameters) 
-clf2 = clf2.fit(features_train, labels_train)
+## Random Forest supervised learning classifier with manual parameter tuning
+from sklearn.ensemble import RandomForestClassifier
+
+clf2 = RandomForestClassifier(n_estimators=10, min_samples_split=10, 
+                             criterion='entropy', min_samples_leaf=10,
+                             bootstrap=False)
+clf2 = clf.fit(features_train, labels_train)
+
         
 """
 STEP 4: EVALUATION & VALIDATION
@@ -324,7 +325,7 @@ print
 print "Naive Bayes Classifier Results"
 print classifier_eval(clf1, features_test, labels_test)
 print
-print "SVM Classifier Results"
+print "Random Forest Classifier Results"
 print classifier_eval(clf2, features_test, labels_test)
 print
  
